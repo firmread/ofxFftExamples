@@ -7,7 +7,7 @@ class ofApp : public ofBaseApp {
 public:
 	void setup();
 	void plot(vector<float>& buffer, float scale, float offset);
-	void audioReceived(float* input, int bufferSize, int nChannels);
+	void audioIn(ofSoundBuffer& buffer);
 	void draw();
 
 	int plotHeight, bufferSize;

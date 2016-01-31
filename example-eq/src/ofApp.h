@@ -11,7 +11,7 @@ class ofApp : public ofBaseApp {
 public:
 	void setup();
 	void plot(float* array, int length, float scale, float offset);
-	void audioReceived(float* input, int bufferSize, int nChannels);
+	void audioIn(float* input, int bufferSize, int nChannels);
 	void draw();
 	void keyPressed(int key);
 

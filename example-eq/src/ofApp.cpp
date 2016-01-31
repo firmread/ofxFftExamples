@@ -62,7 +62,7 @@ void ofApp::draw() {
 
 void ofApp::plot(float* array, int length, float scale, float offset) {
 	ofNoFill();
-	ofRect(0, 0, length, plotHeight);
+	ofDrawRectangle(0, 0, length, plotHeight);
 	glPushMatrix();
 	glTranslatef(0, plotHeight / 2 + offset, 0);
 	ofBeginShape();
@@ -72,7 +72,7 @@ void ofApp::plot(float* array, int length, float scale, float offset) {
 	glPopMatrix();
 }
 
-void ofApp::audioReceived(float* input, int bufferSize, int nChannels) {
+void ofApp::audioIn(float* input, int bufferSize, int nChannels) {
 	if (mode == MIC) {
 		// store input in audioInput buffer
 		memcpy(audioInput, input, sizeof(float) * bufferSize);

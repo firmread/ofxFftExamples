@@ -6,9 +6,9 @@ void ofApp::setup() {
 	plotHeight = 128;
 	bufferSize = 2048;
 	
-//	fft = ofxFft::create(bufferSize, OF_FFT_WINDOW_HAMMING);
+	fft = ofxFft::create(bufferSize, OF_FFT_WINDOW_HAMMING);
 	// To use FFTW, try:
-	fft = ofxFft::create(bufferSize, OF_FFT_WINDOW_HAMMING, OF_FFT_FFTW);
+	//fft = ofxFft::create(bufferSize, OF_FFT_WINDOW_HAMMING, OF_FFT_FFTW);
 	
 	drawBins.resize(fft->getBinSize());
 	middleBins.resize(fft->getBinSize());
@@ -44,7 +44,7 @@ void ofApp::draw() {
 void ofApp::plot(vector<float>& buffer, float scale, float offset) {
 	ofNoFill();
 	int n = buffer.size();
-	ofRect(0, 0, n, plotHeight);
+	ofDrawRectangle(0, 0, n, plotHeight);
 	glPushMatrix();
 	glTranslatef(0, plotHeight / 2 + offset, 0);
 	ofBeginShape();
@@ -55,18 +55,18 @@ void ofApp::plot(vector<float>& buffer, float scale, float offset) {
 	glPopMatrix();
 }
 
-void ofApp::audioReceived(float* input, int bufferSize, int nChannels) {	
+void ofApp::audioIn(ofSoundBuffer& buffer) {
 	float maxValue = 0;
 	for(int i = 0; i < bufferSize; i++) {
-		if(abs(input[i]) > maxValue) {
-			maxValue = abs(input[i]);
+		if(abs(buffer[i]) > maxValue) {
+			maxValue = abs(buffer[i]);
 		}
 	}
 	for(int i = 0; i < bufferSize; i++) {
-		input[i] /= maxValue;
+		buffer[i] /= maxValue;
 	}
 	
-	fft->setSignal(input);
+	fft->setSignal(buffer.getBuffer());
 	
 	float* curFft = fft->getAmplitude();
 	memcpy(&audioBins[0], curFft, sizeof(float) * fft->getBinSize());
