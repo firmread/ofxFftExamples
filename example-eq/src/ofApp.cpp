@@ -72,10 +72,11 @@ void ofApp::plot(float* array, int length, float scale, float offset) {
 	glPopMatrix();
 }
 
-void ofApp::audioIn(float* input, int bufferSize, int nChannels) {
+void ofApp::audioIn(ofSoundBuffer& buffer) {
 	if (mode == MIC) {
 		// store input in audioInput buffer
-		memcpy(audioInput, input, sizeof(float) * bufferSize);
+//		memcpy(audioInput, input, sizeof(float) * bufferSize);
+        audioInput = buffer.getBuffer().data();
 	} else if (mode == NOISE) {
 		for (int i = 0; i < bufferSize; i++)
 			audioInput[i] = ofRandom(-1, 1);
